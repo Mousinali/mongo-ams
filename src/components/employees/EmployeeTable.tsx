@@ -39,7 +39,7 @@ export default function EmployeeTable() {
       "/api/employees",
       fetcher,
       {
-        refreshInterval: 5000,
+        refreshInterval: 30000,
         revalidateOnFocus: true,
         dedupingInterval: 2000,
       }
@@ -103,8 +103,39 @@ export default function EmployeeTable() {
 
   if (isLoading) {
     return (
-      <div className="p-10">
-        Loading employees...
+      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-[0_4px_14px_rgba(0,0,0,0.05)]">
+        {/* Header Skeleton */}
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between px-6 py-4 border-b border-zinc-100">
+          <div className="h-5 w-40 bg-zinc-200 rounded animate-pulse" />
+          <div className="h-11 w-72 bg-zinc-100 rounded-xl animate-pulse" />
+        </div>
+
+        {/* Table Skeleton */}
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[1000px]">
+            <thead className="bg-[#d8dff9]">
+              <tr>
+                {["w-24", "w-16", "w-24", "w-24", "w-14", "w-16"].map((w, i) => (
+                  <th key={i} className="text-left px-6 py-3">
+                    <div className={`h-4 ${w} bg-indigo-200/50 rounded animate-pulse`} />
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[...Array(5)].map((_, i) => (
+                <tr key={i} className="border-b border-zinc-100">
+                  <td className="px-6 py-3"><div className="h-4 w-20 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-4 w-28 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-4 w-24 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-4 w-24 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-5 w-14 bg-zinc-100 rounded-full animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-8 w-16 bg-zinc-100 rounded-lg animate-pulse ml-auto" /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

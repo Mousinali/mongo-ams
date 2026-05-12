@@ -9,6 +9,7 @@ import {
   useParams,
   useRouter,
 } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function ReturnAssetPage() {
   const router = useRouter();
@@ -93,13 +94,15 @@ export default function ReturnAssetPage() {
         throw new Error();
       }
 
+      toast.success("Asset returned successfully");
+
       router.push(
         "/assignments"
       );
 
       router.refresh();
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to return asset"
       );
     } finally {

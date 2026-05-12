@@ -45,7 +45,7 @@ export default function ReportsTable() {
       "/api/reports",
       fetcher,
       {
-        refreshInterval: 5000,
+        refreshInterval: 30000,
         revalidateOnFocus: true,
         dedupingInterval: 2000,
       }
@@ -245,8 +245,54 @@ export default function ReportsTable() {
 
   if (isLoading) {
     return (
-      <div className="bg-white border border-zinc-200 rounded-3xl p-10 text-center text-zinc-500">
-        Loading reports...
+      <div className="bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-[0_4px_14px_rgba(0,0,0,0.05)]">
+        {/* Header Skeleton */}
+        <div className="flex flex-col gap-4 p-6 border-b border-zinc-100">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <div className="h-6 w-32 bg-zinc-200 rounded animate-pulse" />
+              <div className="h-4 w-24 bg-zinc-100 rounded mt-2 animate-pulse" />
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="h-11 w-20 bg-zinc-100 rounded-xl animate-pulse" />
+              <div className="h-11 w-20 bg-zinc-200 rounded-xl animate-pulse" />
+            </div>
+          </div>
+          <div className="flex flex-col lg:flex-row gap-3">
+            <div className="h-11 flex-1 bg-zinc-100 rounded-xl animate-pulse" />
+            <div className="h-11 w-40 bg-zinc-100 rounded-xl animate-pulse" />
+            <div className="h-11 w-40 bg-zinc-100 rounded-xl animate-pulse" />
+          </div>
+        </div>
+
+        {/* Table Skeleton */}
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[1400px]">
+            <thead className="bg-[#d8dff9]">
+              <tr>
+                {["w-20", "w-24", "w-16", "w-20", "w-20", "w-20", "w-14", "w-24"].map((w, i) => (
+                  <th key={i} className="text-left px-6 py-3">
+                    <div className={`h-4 ${w} bg-indigo-200/50 rounded animate-pulse`} />
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[...Array(5)].map((_, i) => (
+                <tr key={i} className="border-b border-zinc-100">
+                  <td className="px-6 py-3"><div className="space-y-1"><div className="h-4 w-28 bg-zinc-100 rounded animate-pulse" /><div className="h-3 w-16 bg-zinc-50 rounded animate-pulse" /></div></td>
+                  <td className="px-6 py-3"><div className="h-4 w-20 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="space-y-1"><div className="h-4 w-24 bg-zinc-100 rounded animate-pulse" /><div className="h-3 w-16 bg-zinc-50 rounded animate-pulse" /></div></td>
+                  <td className="px-6 py-3"><div className="h-4 w-20 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-4 w-20 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-4 w-20 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-5 w-16 bg-zinc-100 rounded-full animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-4 w-24 bg-zinc-100 rounded animate-pulse" /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

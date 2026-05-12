@@ -6,6 +6,7 @@ import {
 } from "react";
 
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AddAssetPage() {
   const router = useRouter();
@@ -75,11 +76,13 @@ export default function AddAssetPage() {
         throw new Error();
       }
 
+      toast.success("Asset created successfully");
+
       router.push("/assets");
 
       router.refresh();
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to create asset"
       );
     } finally {

@@ -9,6 +9,7 @@ import {
   useParams,
   useRouter,
 } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function EditAssetPage() {
   const router = useRouter();
@@ -136,11 +137,13 @@ export default function EditAssetPage() {
         throw new Error();
       }
 
+      toast.success("Asset updated successfully");
+
       router.push("/assets");
 
       router.refresh();
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to update asset"
       );
     } finally {

@@ -6,6 +6,7 @@ import {
 } from "react";
 
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AddEmployeePage() {
   const router = useRouter();
@@ -116,13 +117,15 @@ export default function AddEmployeePage() {
         throw new Error();
       }
 
+      toast.success("Employee created successfully");
+
       router.push(
         "/employees"
       );
 
       router.refresh();
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to create employee"
       );
     } finally {

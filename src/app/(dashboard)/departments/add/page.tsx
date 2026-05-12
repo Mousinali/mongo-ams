@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AddDepartmentPage() {
   const router = useRouter();
@@ -42,13 +43,15 @@ export default function AddDepartmentPage() {
         throw new Error();
       }
 
+      toast.success("Department created successfully");
+
       router.push(
         "/departments"
       );
 
       router.refresh();
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to create department"
       );
     } finally {

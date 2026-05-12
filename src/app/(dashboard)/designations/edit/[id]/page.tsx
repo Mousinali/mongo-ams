@@ -9,6 +9,7 @@ import {
   useParams,
   useRouter,
 } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function EditDesignationPage() {
   const router = useRouter();
@@ -96,14 +97,16 @@ export default function EditDesignationPage() {
         throw new Error();
       }
 
+      toast.success("Designation updated successfully");
+
       router.push(
         "/designations"
       );
 
       router.refresh();
     } catch (error) {
-      alert(
-        "Failed to update"
+      toast.error(
+        "Failed to update designation"
       );
     } finally {
       setLoading(false);

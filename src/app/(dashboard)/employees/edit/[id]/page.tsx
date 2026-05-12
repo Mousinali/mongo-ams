@@ -9,6 +9,7 @@ import {
   useParams,
   useRouter,
 } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function EditEmployeePage() {
   const router = useRouter();
@@ -160,13 +161,15 @@ export default function EditEmployeePage() {
         throw new Error();
       }
 
+      toast.success("Employee updated successfully");
+
       router.push(
         "/employees"
       );
 
       router.refresh();
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to update employee"
       );
     } finally {

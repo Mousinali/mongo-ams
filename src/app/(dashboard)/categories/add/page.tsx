@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AddCategoryPage() {
   const router = useRouter();
@@ -45,13 +46,15 @@ export default function AddCategoryPage() {
         throw new Error();
       }
 
+      toast.success("Category created successfully");
+
       router.push(
         "/categories"
       );
 
       router.refresh();
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to create category"
       );
     } finally {

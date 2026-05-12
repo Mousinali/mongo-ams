@@ -24,7 +24,7 @@ export default function DashboardPage() {
     "/api/dashboard",
     fetcher,
     {
-      refreshInterval: 5000,
+      refreshInterval: 30000,
       revalidateOnFocus: true,
       dedupingInterval: 2000,
     }
@@ -32,8 +32,82 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="p-10">
-        Loading dashboard...
+      <div className="space-y-8 pb-10">
+        {/* Header Skeleton */}
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="h-8 w-40 bg-zinc-200 rounded-lg animate-pulse" />
+            <div className="h-4 w-64 bg-zinc-100 rounded mt-2 animate-pulse" />
+          </div>
+          <div className="h-10 w-32 bg-zinc-200 rounded-lg animate-pulse" />
+        </div>
+
+        {/* KPI Cards Skeleton */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {[...Array(4)].map((_, i) => (
+            <div
+              key={i}
+              className="bg-white border border-slate-200 rounded-xl p-6 shadow-[0_4px_14px_rgba(0,0,0,0.05)] flex justify-between items-center"
+            >
+              <div className="space-y-2">
+                <div className="h-4 w-24 bg-zinc-100 rounded animate-pulse" />
+                <div className="h-7 w-16 bg-zinc-200 rounded animate-pulse" />
+              </div>
+              <div className="w-14 h-14 rounded-2xl bg-zinc-100 animate-pulse" />
+            </div>
+          ))}
+        </div>
+
+        {/* Content Skeleton */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {/* Recent Assets Skeleton */}
+          <div className="lg:col-span-1">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 py-4 shadow-[0_4px_14px_rgba(0,0,0,0.05)] h-full">
+              <div className="flex items-center justify-between mb-3 -mx-6 px-6 border-b border-slate-200 pb-3">
+                <div className="h-5 w-28 bg-zinc-200 rounded animate-pulse" />
+                <div className="h-4 w-16 bg-zinc-100 rounded animate-pulse" />
+              </div>
+              <div className="space-y-3 -mx-6">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="flex items-center gap-4 px-6 py-2">
+                    <div className="flex-1">
+                      <div className="h-4 w-full bg-zinc-100 rounded animate-pulse" />
+                    </div>
+                    <div className="h-5 w-16 bg-zinc-100 rounded-full animate-pulse" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Latest Assignments Skeleton */}
+          <div className="lg:col-span-2 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-[0_4px_14px_rgba(0,0,0,0.05)]">
+            <div className="px-6 py-3.5 border-b flex items-center justify-between border-slate-100">
+              <div className="h-5 w-36 bg-zinc-200 rounded animate-pulse" />
+              <div className="h-4 w-16 bg-zinc-100 rounded animate-pulse" />
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-[#d8dff9]">
+                    <th className="px-6 py-2.5"><div className="h-4 w-20 bg-indigo-200/50 rounded animate-pulse" /></th>
+                    <th className="px-6 py-2.5"><div className="h-4 w-16 bg-indigo-200/50 rounded animate-pulse" /></th>
+                    <th className="px-6 py-2.5"><div className="h-4 w-14 bg-indigo-200/50 rounded animate-pulse" /></th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {[...Array(5)].map((_, i) => (
+                    <tr key={i}>
+                      <td className="px-6 py-2.5"><div className="h-4 w-28 bg-zinc-100 rounded animate-pulse" /></td>
+                      <td className="px-6 py-2.5"><div className="h-4 w-24 bg-zinc-100 rounded animate-pulse" /></td>
+                      <td className="px-6 py-2.5"><div className="h-5 w-14 bg-zinc-100 rounded-full animate-pulse" /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

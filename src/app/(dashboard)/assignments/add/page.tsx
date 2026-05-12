@@ -6,6 +6,7 @@ import {
 } from "react";
 
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AddAssignmentPage() {
   const router = useRouter();
@@ -98,13 +99,15 @@ export default function AddAssignmentPage() {
         throw new Error();
       }
 
+      toast.success("Asset assigned successfully");
+
       router.push(
         "/assignments"
       );
 
       router.refresh();
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to assign asset"
       );
     } finally {

@@ -58,7 +58,31 @@ export default function AssetTable() {
 
       {/* Loading */}
       {loading ? (
-        <div className="p-16 text-center text-zinc-500">Loading assets...</div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-zinc-50 border-b border-zinc-100">
+              <tr>
+                {["w-16", "w-20", "w-20", "w-14", "w-14", "w-16"].map((w, i) => (
+                  <th key={i} className="text-left p-4">
+                    <div className={`h-4 ${w} bg-zinc-200 rounded animate-pulse`} />
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[...Array(5)].map((_, i) => (
+                <tr key={i} className="border-b border-zinc-100">
+                  <td className="p-4"><div className="h-4 w-20 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="p-4"><div className="h-4 w-28 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="p-4"><div className="h-4 w-20 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="p-4"><div className="h-4 w-16 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="p-4"><div className="h-5 w-16 bg-zinc-100 rounded-full animate-pulse" /></td>
+                  <td className="p-4"><div className="flex gap-3 items-center justify-end"><div className="w-9 h-9 bg-zinc-100 rounded-lg animate-pulse" /><div className="w-9 h-9 bg-zinc-100 rounded-lg animate-pulse" /></div></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : assets.length === 0 ? (
         /* Empty State */
         <div className="p-16 text-center">

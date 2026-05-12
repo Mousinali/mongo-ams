@@ -4,10 +4,14 @@ import {
   useEffect,
   useState,
 } from "react";
+import toast from "react-hot-toast";
 
 export default function SettingsPage() {
   const [loading, setLoading] =
     useState(false);
+
+  const [pageLoading, setPageLoading] =
+    useState(true);
 
   const [formData, setFormData] =
     useState({
@@ -39,6 +43,8 @@ export default function SettingsPage() {
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setPageLoading(false);
     }
   }
 
@@ -74,11 +80,11 @@ export default function SettingsPage() {
         throw new Error();
       }
 
-      alert(
+      toast.success(
         "Settings updated successfully"
       );
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to update settings"
       );
     } finally {
@@ -100,74 +106,98 @@ export default function SettingsPage() {
         </p>
       </div>
 
-      {/* Form */}
-      <div className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-sm">
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-6"
-        >
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-semibold mb-2">
-              Admin Email
-            </label>
+      {/* Loading Skeleton */}
+      {pageLoading ? (
+        <div className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-sm">
+          <div className="space-y-6">
+            {/* Email Skeleton */}
+            <div>
+              <div className="h-4 w-24 bg-zinc-200 rounded animate-pulse mb-2" />
+              <div className="h-12 w-full bg-zinc-100 rounded-xl animate-pulse" />
+            </div>
 
-            <input
-              type="email"
-              required
-              value={
-                formData.email
-              }
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
+            {/* Password Skeleton */}
+            <div>
+              <div className="h-4 w-28 bg-zinc-200 rounded animate-pulse mb-2" />
+              <div className="h-12 w-full bg-zinc-100 rounded-xl animate-pulse" />
+            </div>
 
-                  email:
-                    e.target.value,
-                })
-              }
-              className="w-full h-12 px-4 rounded-xl border border-zinc-200 bg-zinc-50"
-            />
+            {/* Button Skeleton */}
+            <div className="pt-4">
+              <div className="h-12 w-36 bg-zinc-200 rounded-xl animate-pulse" />
+            </div>
           </div>
+        </div>
+      ) : (
+        /* Form */
+        <div className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-sm">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+          >
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-semibold mb-2">
+                Admin Email
+              </label>
 
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-semibold mb-2">
-              Admin Password
-            </label>
+              <input
+                type="email"
+                required
+                value={
+                  formData.email
+                }
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
 
-            <input
-              type="text"
-              required
-              value={
-                formData.password
-              }
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
+                    email:
+                      e.target.value,
+                  })
+                }
+                className="w-full h-12 px-4 rounded-xl border border-zinc-200 bg-zinc-50"
+              />
+            </div>
 
-                  password:
-                    e.target.value,
-                })
-              }
-              className="w-full h-12 px-4 rounded-xl border border-zinc-200 bg-zinc-50"
-            />
-          </div>
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-semibold mb-2">
+                Admin Password
+              </label>
 
-          {/* Button */}
-          <div className="pt-4">
-            <button
-              type="submit"
-              disabled={loading}
-              className="h-12 px-6 rounded-xl bg-black text-white font-semibold"
-            >
-              {loading
-                ? "Updating..."
-                : "Update Settings"}
-            </button>
-          </div>
-        </form>
-      </div>
+              <input
+                type="text"
+                required
+                value={
+                  formData.password
+                }
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+
+                    password:
+                      e.target.value,
+                  })
+                }
+                className="w-full h-12 px-4 rounded-xl border border-zinc-200 bg-zinc-50"
+              />
+            </div>
+
+            {/* Button */}
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="h-12 px-6 rounded-xl bg-black text-white font-semibold"
+              >
+                {loading
+                  ? "Updating..."
+                  : "Update Settings"}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

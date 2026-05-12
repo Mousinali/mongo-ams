@@ -9,6 +9,7 @@ import {
   useParams,
   useRouter,
 } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function EditDepartmentPage() {
   const router = useRouter();
@@ -72,14 +73,16 @@ export default function EditDepartmentPage() {
         throw new Error();
       }
 
+      toast.success("Department updated successfully");
+
       router.push(
         "/departments"
       );
 
       router.refresh();
     } catch (error) {
-      alert(
-        "Failed to update"
+      toast.error(
+        "Failed to update department"
       );
     } finally {
       setLoading(false);

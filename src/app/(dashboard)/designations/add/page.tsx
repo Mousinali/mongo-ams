@@ -6,6 +6,7 @@ import {
 } from "react";
 
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AddDesignationPage() {
   const router = useRouter();
@@ -68,13 +69,15 @@ export default function AddDesignationPage() {
         throw new Error();
       }
 
+      toast.success("Designation created successfully");
+
       router.push(
         "/designations"
       );
 
       router.refresh();
     } catch (error) {
-      alert(
+      toast.error(
         "Failed to create designation"
       );
     } finally {

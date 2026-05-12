@@ -5,13 +5,20 @@ import { useEffect, useState } from "react";
 
 export default function DepartmentsPage() {
   const [departments, setDepartments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function fetchDepartments() {
-    const res = await fetch("/api/departments");
+    try {
+      const res = await fetch("/api/departments");
 
-    const data = await res.json();
+      const data = await res.json();
 
-    setDepartments(data.data || []);
+      setDepartments(data.data || []);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -36,8 +43,33 @@ export default function DepartmentsPage() {
         </Link>
       </div>
 
-      {/* Empty State */}
-      {departments.length === 0 ? (
+      {/* Loading Skeleton */}
+      {loading ? (
+        <div className="bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
+          <table className="w-full">
+            <thead className="bg-zinc-50 border-b border-zinc-100">
+              <tr>
+                {["w-28", "w-14", "w-20", "w-16"].map((w, i) => (
+                  <th key={i} className={`${i === 3 ? "text-right" : "text-left"} p-4`}>
+                    <div className={`h-4 ${w} bg-zinc-200 rounded animate-pulse ${i === 3 ? "ml-auto" : ""}`} />
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[...Array(4)].map((_, i) => (
+                <tr key={i} className="border-b border-zinc-100">
+                  <td className="p-4"><div className="h-4 w-32 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="p-4"><div className="h-5 w-14 bg-zinc-100 rounded-full animate-pulse" /></td>
+                  <td className="p-4"><div className="h-4 w-20 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="p-4"><div className="flex items-center justify-end"><div className="w-9 h-9 bg-zinc-100 rounded-lg animate-pulse" /></div></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : departments.length === 0 ? (
+        /* Empty State */
         <div className="bg-white border border-zinc-200 rounded-3xl p-16 text-center">
           <div className="w-16 h-16 rounded-2xl bg-zinc-100 flex items-center justify-center mx-auto mb-4">
             <i className="ri-building-line text-3xl text-zinc-400"></i>
