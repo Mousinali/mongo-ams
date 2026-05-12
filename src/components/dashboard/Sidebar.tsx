@@ -14,37 +14,6 @@ const menuItems = [
         icon: "ri-layout-grid-line",
       },
       {
-        name: "Employees",
-        href: "/employees",
-        icon: "ri-team-line",
-      },
-      {
-        name: "Assignments",
-        href: "/assignments",
-        icon: "ri-arrow-left-right-line",
-      },
-      
-    ],
-  },
-
-  {
-    group: "Management",
-    items: [
-      {
-        name: "Assets",
-        href: "/assets",
-        icon: "ri-computer-line",
-      },
-
-      {
-        name: "Categories",
-        href: "/categories",
-        icon: "ri-price-tag-3-line",
-      },
-
-
-      
-      {
         name: "Departments",
         href: "/departments",
         icon: "ri-building-line",
@@ -54,6 +23,32 @@ const menuItems = [
         name: "Designations",
         href: "/designations",
         icon: "ri-id-card-line",
+      },
+      {
+        name: "Employees",
+        href: "/employees",
+        icon: "ri-team-line",
+      },
+    ],
+  },
+
+  {
+    group: "Management",
+    items: [
+      {
+        name: "Categories",
+        href: "/categories",
+        icon: "ri-price-tag-3-line",
+      },
+      {
+        name: "Assets",
+        href: "/assets",
+        icon: "ri-computer-line",      },
+
+      {
+        name: "Assignments",
+        href: "/assignments",
+        icon: "ri-arrow-left-right-line",
       },
     ],
   },
@@ -129,7 +124,7 @@ export default function Sidebar({
             {!isCollapsed && (
               <div className="flex-1 overflow-hidden">
                 <p className="truncate text-sm font-semibold leading-none">
-                Turain Software
+                  Turain Software
                 </p>
 
                 <p className="mt-1 truncate text-[11px] text-zinc-500 font-medium">
@@ -216,57 +211,57 @@ export default function Sidebar({
         </div>
 
         {/* Bottom User Section */}
-<div
-  className={`p-2 pb-4 shrink-0 ${
-    isCollapsed ? "overflow-visible" : ""
-  }`}
->
-  <div
-    className={`group relative flex items-center gap-3 rounded-lg p-2 text-zinc-900 transition-colors hover:bg-zinc-50 ${
-      isCollapsed ? "justify-center" : ""
-    }`}
-  >
-    {/* Avatar */}
-    <div className="h-8 w-8 min-w-[32px] rounded-md bg-zinc-100 flex items-center justify-center border border-zinc-200 overflow-hidden shadow-sm">
-      <i className="ri-user-line text-zinc-500"></i>
-    </div>
-
-    {/* Expanded View */}
-    {!isCollapsed && (
-      <>
-        <div className="flex-1 overflow-hidden">
-          <p className="truncate text-sm font-semibold leading-none">
-            Admin Account
-          </p>
-
-          <p className="mt-1 truncate text-[11px] text-zinc-500 font-medium tracking-tight">
-            admin@gmail.com
-          </p>
-        </div>
-
-        {/* Logout */}
-        <button
-          onClick={handleLogout}
-          className="text-zinc-400 hover:text-red-600 p-1 transition-colors"
-          title="Logout"
+        <div
+          className={`p-2 pb-4 shrink-0 ${
+            isCollapsed ? "overflow-visible" : ""
+          }`}
         >
-          <i className="ri-logout-box-line text-lg"></i>
-        </button>
-      </>
-    )}
+          <div
+            className={`group relative flex items-center gap-3 rounded-lg p-2 text-zinc-900 transition-colors hover:bg-zinc-50 ${
+              isCollapsed ? "justify-center" : ""
+            }`}
+          >
+            {/* Avatar */}
+            <div className="h-8 w-8 min-w-[32px] rounded-md bg-zinc-100 flex items-center justify-center border border-zinc-200 overflow-hidden shadow-sm">
+              <i className="ri-user-line text-zinc-500"></i>
+            </div>
 
-    {/* Collapsed Tooltip */}
-    {isCollapsed && (
-      <div className="absolute left-full ml-4 z-[100] invisible group-hover:visible opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all pointer-events-none">
-        <div className="bg-zinc-950 text-zinc-50 text-[11px] font-medium px-2.5 py-1.5 rounded-md shadow-xl border border-white/10 whitespace-nowrap">
-          Admin Account
+            {/* Expanded View */}
+            {!isCollapsed && (
+              <>
+                <div className="flex-1 overflow-hidden">
+                  <p className="truncate text-sm font-semibold leading-none">
+                    Admin Account
+                  </p>
+
+                  <p className="mt-1 truncate text-[11px] text-zinc-500 font-medium tracking-tight">
+                    admin@gmail.com
+                  </p>
+                </div>
+
+                {/* Logout */}
+                <button
+                  onClick={handleLogout}
+                  className="text-zinc-400 hover:text-red-600 p-1 transition-colors"
+                  title="Logout"
+                >
+                  <i className="ri-logout-box-line text-lg"></i>
+                </button>
+              </>
+            )}
+
+            {/* Collapsed Tooltip */}
+            {isCollapsed && (
+              <div className="absolute left-full ml-4 z-[100] invisible group-hover:visible opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all pointer-events-none">
+                <div className="bg-zinc-950 text-zinc-50 text-[11px] font-medium px-2.5 py-1.5 rounded-md shadow-xl border border-white/10 whitespace-nowrap">
+                  Admin Account
+                </div>
+
+                <div className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-0 h-0 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-r-[6px] border-r-zinc-950"></div>
+              </div>
+            )}
+          </div>
         </div>
-
-        <div className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-0 h-0 border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent border-r-[6px] border-r-zinc-950"></div>
-      </div>
-    )}
-  </div>
-</div>
       </aside>
     </>
   );

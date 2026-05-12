@@ -21,6 +21,13 @@ export default function Topbar({
     return path.charAt(0).toUpperCase() + path.slice(1);
   };
 
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+    });
+    window.location.href = "/login";
+  };
+
   return (
     <header className="h-16 border-b border-zinc-200 bg-white/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 lg:px-4">
       <div className="flex items-center gap-4">
@@ -46,17 +53,22 @@ export default function Topbar({
       </div>
 
       <div className="flex items-center gap-2 lg:gap-4">
-        {/* Search - Placeholder */}
-        <div className="hidden sm:flex items-center relative group">
-          <i className="ri-search-line absolute left-3 text-zinc-400 group-focus-within:text-zinc-900 transition-colors"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="h-9 w-40 md:w-64 bg-zinc-50 border border-zinc-200 rounded-lg pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-black/5 focus:bg-white transition-all"
-          />
+        {/* Admin Section */}
+        <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-full border border-zinc-200 bg-zinc-50/50">
+          <div className="w-7 h-7 rounded-full bg-white border border-zinc-200 flex items-center justify-center shadow-sm">
+            <i className="ri-user-3-line text-zinc-600 text-sm"></i>
+          </div>
+          <span className="text-xs font-semibold text-zinc-700 pr-1 hidden sm:block">Admin Account</span>
         </div>
 
-        
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-all group"
+          title="Logout"
+        >
+          <i className="ri-logout-box-r-line text-xl group-hover:scale-110 transition-transform"></i>
+        </button>
       </div>
     </header>
   );
