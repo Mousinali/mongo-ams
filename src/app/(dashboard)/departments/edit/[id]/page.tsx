@@ -5,6 +5,7 @@ import {
   useState,
 } from "react";
 
+import BackButton from "@/components/BackButton";
 import {
   useParams,
   useRouter,
@@ -90,7 +91,8 @@ export default function EditDepartmentPage() {
   }
 
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-4xl">
+      <BackButton />
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import BackButton from "@/components/BackButton";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -63,7 +64,8 @@ export default function AddCategoryPage() {
   }
 
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-4xl">
+      <BackButton />
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">

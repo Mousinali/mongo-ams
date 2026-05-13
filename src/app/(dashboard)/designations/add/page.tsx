@@ -5,6 +5,8 @@ import {
   useState,
 } from "react";
 
+import BackButton from "@/components/BackButton";
+import SearchableSelect from "@/components/SearchableSelect";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -86,7 +88,8 @@ export default function AddDesignationPage() {
   }
 
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-4xl">
+      <BackButton />
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
@@ -129,50 +132,17 @@ export default function AddDesignationPage() {
           </div>
 
           {/* Department */}
-          <div>
-            <label className="block text-sm font-semibold mb-2">
-              Department
-            </label>
-
-            <select
-              required
-              value={
-                formData.department
-              }
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  department:
-                    e.target
-                      .value,
-                })
-              }
-              className="w-full h-12 px-4 rounded-xl border border-zinc-200 bg-zinc-50"
-            >
-              <option value="">
-                Select Department
-              </option>
-
-              {departments.map(
-                (
-                  department: any
-                ) => (
-                  <option
-                    key={
-                      department._id
-                    }
-                    value={
-                      department._id
-                    }
-                  >
-                    {
-                      department.name
-                    }
-                  </option>
-                )
-              )}
-            </select>
-          </div>
+          <SearchableSelect
+            label="Department"
+            required
+            options={departments.map((dept: any) => ({
+              label: dept.name,
+              value: dept._id,
+            }))}
+            value={formData.department}
+            onChange={(val) => setFormData({ ...formData, department: val })}
+            placeholder="Select Department"
+          />
 
           {/* Status */}
           <div>
@@ -180,28 +150,22 @@ export default function AddDesignationPage() {
               Status
             </label>
 
-            <select
-              value={
-                formData.status
-              }
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  status:
-                    e.target
-                      .value,
-                })
-              }
-              className="w-full h-12 px-4 rounded-xl border border-zinc-200 bg-zinc-50"
-            >
-              <option>
-                Active
-              </option>
-
-              <option>
-                Inactive
-              </option>
-            </select>
+            <div className="relative">
+              <select
+                value={formData.status}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    status: e.target.value,
+                  })
+                }
+                className="w-full h-12 px-4 pr-10 appearance-none rounded-xl border border-zinc-200 bg-zinc-50 outline-none transition-all focus:border-zinc-400 cursor-pointer"
+              >
+                <option>Active</option>
+                <option>Inactive</option>
+              </select>
+              <i className="ri-arrow-down-s-line absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none text-lg"></i>
+            </div>
           </div>
 
           {/* Buttons */}

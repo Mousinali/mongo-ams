@@ -5,6 +5,8 @@ import {
   useState,
 } from "react";
 
+import BackButton from "@/components/BackButton";
+import SearchableSelect from "@/components/SearchableSelect";
 import {
   useParams,
   useRouter,
@@ -152,7 +154,8 @@ export default function EditAssetPage() {
   }
 
   return (
-    <div className="max-w-5xl">
+    <div className="max-w-4xl">
+      <BackButton />
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
@@ -220,50 +223,17 @@ export default function EditAssetPage() {
             </div>
 
             {/* Category */}
-            <div>
-              <label className="block text-sm font-semibold mb-2">
-                Category
-              </label>
-
-              <select
-                required
-                value={
-                  formData.category
-                }
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    category:
-                      e.target
-                        .value,
-                  })
-                }
-                className="w-full h-12 px-4 rounded-xl border border-zinc-200 bg-zinc-50"
-              >
-                <option value="">
-                  Select Category
-                </option>
-
-                {categories.map(
-                  (
-                    category: any
-                  ) => (
-                    <option
-                      key={
-                        category._id
-                      }
-                      value={
-                        category._id
-                      }
-                    >
-                      {
-                        category.name
-                      }
-                    </option>
-                  )
-                )}
-              </select>
-            </div>
+            <SearchableSelect
+              label="Category"
+              required
+              options={categories.map((cat: any) => ({
+                label: cat.name,
+                value: cat._id,
+              }))}
+              value={formData.category}
+              onChange={(val) => setFormData({ ...formData, category: val })}
+              placeholder="Select Category"
+            />
 
             {/* Brand */}
             <div>

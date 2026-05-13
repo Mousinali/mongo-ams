@@ -5,6 +5,8 @@ import {
   useState,
 } from "react";
 
+import BackButton from "@/components/BackButton";
+import SearchableSelect from "@/components/SearchableSelect";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -116,7 +118,8 @@ export default function AddAssignmentPage() {
   }
 
   return (
-    <div className="max-w-5xl">
+    <div className="max-w-4xl">
+      <BackButton />
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">
@@ -137,103 +140,32 @@ export default function AddAssignmentPage() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Employee */}
-            <div>
-              <label className="block text-sm font-semibold mb-2">
-                Employee
-              </label>
-
-              <select
-                required
-                value={
-                  formData.employee
-                }
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    employee:
-                      e.target
-                        .value,
-                  })
-                }
-                className="w-full h-12 px-4 rounded-xl border border-zinc-200 bg-zinc-50"
-              >
-                <option value="">
-                  Select Employee
-                </option>
-
-                {employees.map(
-                  (
-                    employee: any
-                  ) => (
-                    <option
-                      key={
-                        employee._id
-                      }
-                      value={
-                        employee._id
-                      }
-                    >
-                      {
-                        employee.name
-                      }{" "}
-                      (
-                      {
-                        employee.employeeId
-                      }
-                      )
-                    </option>
-                  )
-                )}
-              </select>
-            </div>
+            <SearchableSelect
+              label="Employee"
+              required
+              options={employees.map((emp: any) => ({
+                label: emp.name,
+                value: emp._id,
+                subLabel: emp.employeeId,
+              }))}
+              value={formData.employee}
+              onChange={(val) => setFormData({ ...formData, employee: val })}
+              placeholder="Select Employee"
+            />
 
             {/* Asset */}
-            <div>
-              <label className="block text-sm font-semibold mb-2">
-                Asset
-              </label>
-
-              <select
-                required
-                value={
-                  formData.asset
-                }
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    asset:
-                      e.target
-                        .value,
-                  })
-                }
-                className="w-full h-12 px-4 rounded-xl border border-zinc-200 bg-zinc-50"
-              >
-                <option value="">
-                  Select Asset
-                </option>
-
-                {assets.map(
-                  (
-                    asset: any
-                  ) => (
-                    <option
-                      key={
-                        asset._id
-                      }
-                      value={
-                        asset._id
-                      }
-                    >
-                      {asset.name} (
-                      {
-                        asset.assetId
-                      }
-                      )
-                    </option>
-                  )
-                )}
-              </select>
-            </div>
+            <SearchableSelect
+              label="Asset"
+              required
+              options={assets.map((asset: any) => ({
+                label: asset.name,
+                value: asset._id,
+                subLabel: asset.assetId,
+              }))}
+              value={formData.asset}
+              onChange={(val) => setFormData({ ...formData, asset: val })}
+              placeholder="Select Asset"
+            />
 
             {/* Assigned Date */}
             <div>

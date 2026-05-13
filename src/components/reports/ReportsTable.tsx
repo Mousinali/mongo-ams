@@ -45,7 +45,7 @@ export default function ReportsTable() {
       "/api/reports",
       fetcher,
       {
-        refreshInterval: 30000,
+        refreshInterval: 300000,
         revalidateOnFocus: true,
         dedupingInterval: 2000,
       }
@@ -321,7 +321,7 @@ export default function ReportsTable() {
               onClick={
                 exportCSV
               }
-              className="h-11 px-5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-100 text-sm font-medium transition-all inline-flex items-center gap-2"
+              className="h-11 px-5 rounded-xl border border-zinc-200 bg-emerald-600 text-white hover:bg-zinc-100 text-sm font-medium transition-all inline-flex items-center gap-2"
             >
               <i className="ri-file-text-line"></i>
 

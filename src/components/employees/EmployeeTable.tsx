@@ -39,7 +39,7 @@ export default function EmployeeTable() {
       "/api/employees",
       fetcher,
       {
-        refreshInterval: 30000,
+        refreshInterval: 300000,
         revalidateOnFocus: true,
         dedupingInterval: 2000,
       }

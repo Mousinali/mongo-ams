@@ -5,6 +5,7 @@ import {
   useEffect,
 } from "react";
 
+import BackButton from "@/components/BackButton";
 import {
   useParams,
   useRouter,
@@ -119,7 +120,8 @@ export default function ReturnAssetPage() {
   }
 
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-4xl">
+      <BackButton />
       <div className="mb-8">
         <h1 className="text-3xl font-bold">
           Return Asset

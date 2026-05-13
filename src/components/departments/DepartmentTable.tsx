@@ -10,43 +10,40 @@ const fetcher = async (url: string) => {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch assets");
+    throw new Error("Failed to fetch");
   }
 
   return res.json();
 };
 
-export default function AssetTable() {
+export default function DepartmentTable() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const { data, isLoading } = useSWR("/api/assets", fetcher, {
+  const { data, isLoading } = useSWR("/api/departments", fetcher, {
     refreshInterval: 300000,
     revalidateOnFocus: true,
     dedupingInterval: 2000,
   });
 
-  const assets = data?.data || [];
+  const departments = data?.data || [];
 
   /* Search Filter */
-  const filteredAssets = useMemo(() => {
-    return assets.filter((asset: any) => {
+  const filteredDepartments = useMemo(() => {
+    return departments.filter((department: any) => {
       const searchText = search.toLowerCase();
       return (
-        asset.assetId?.toLowerCase().includes(searchText) ||
-        asset.name?.toLowerCase().includes(searchText) ||
-        asset.category?.name?.toLowerCase().includes(searchText) ||
-        asset.brand?.toLowerCase().includes(searchText) ||
-        asset.status?.toLowerCase().includes(searchText)
+        department.name?.toLowerCase().includes(searchText) ||
+        department.status?.toLowerCase().includes(searchText)
       );
     });
-  }, [assets, search]);
+  }, [departments, search]);
 
   /* Pagination */
-  const totalPages = Math.ceil(filteredAssets.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredDepartments.length / itemsPerPage);
 
-  const paginatedAssets = filteredAssets.slice(
+  const paginatedDepartments = filteredDepartments.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -65,7 +62,7 @@ export default function AssetTable() {
           <table className="w-full">
             <thead className="bg-[#d8dff9]">
               <tr>
-                {["w-20", "w-32", "w-24", "w-24", "w-16", "w-20"].map((w, i) => (
+                {["w-32", "w-14", "w-20", "w-16"].map((w, i) => (
                   <th key={i} className="text-left px-6 py-3">
                     <div className={`h-4 ${w} bg-indigo-200/50 rounded animate-pulse`} />
                   </th>
@@ -75,12 +72,10 @@ export default function AssetTable() {
             <tbody>
               {[...Array(5)].map((_, i) => (
                 <tr key={i} className="border-b border-zinc-100">
-                  <td className="px-6 py-3"><div className="h-4 w-20 bg-zinc-100 rounded animate-pulse" /></td>
-                  <td className="px-6 py-3"><div className="h-4 w-32 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-4 w-40 bg-zinc-100 rounded animate-pulse" /></td>
+                  <td className="px-6 py-3"><div className="h-5 w-14 bg-zinc-100 rounded-full animate-pulse" /></td>
                   <td className="px-6 py-3"><div className="h-4 w-24 bg-zinc-100 rounded animate-pulse" /></td>
-                  <td className="px-6 py-3"><div className="h-4 w-24 bg-zinc-100 rounded animate-pulse" /></td>
-                  <td className="px-6 py-3"><div className="h-5 w-16 bg-zinc-100 rounded-full animate-pulse" /></td>
-                  <td className="px-6 py-3"><div className="flex gap-3 items-center justify-end"><div className="w-9 h-9 bg-zinc-100 rounded-lg animate-pulse" /><div className="w-9 h-9 bg-zinc-100 rounded-lg animate-pulse" /></div></td>
+                  <td className="px-6 py-3"><div className="h-8 w-16 bg-zinc-100 rounded-lg animate-pulse ml-auto" /></td>
                 </tr>
               ))}
             </tbody>
@@ -96,7 +91,7 @@ export default function AssetTable() {
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between px-6 py-4 border-b border-zinc-100">
         <div>
           <h2 className="text-lg font-bold text-zinc-900">
-            Total Assets: {filteredAssets.length}
+            Total Departments: {filteredDepartments.length}
           </h2>
         </div>
 
@@ -106,7 +101,7 @@ export default function AssetTable() {
             <i className="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"></i>
             <input
               type="text"
-              placeholder="Search asset..."
+              placeholder="Search department..."
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
@@ -123,84 +118,61 @@ export default function AssetTable() {
         <table className="w-full">
           <thead className="bg-[#d8dff9] text-[#4A4A6A] text-sm font-bold">
             <tr>
-              <th className="text-left px-6 py-3">Asset ID</th>
-              <th className="text-left px-6 py-3">Asset Name</th>
-              <th className="text-left px-6 py-3">Category</th>
-              <th className="text-left px-6 py-3">Brand</th>
+              <th className="text-left px-6 py-3">Department Name</th>
               <th className="text-left px-6 py-3">Status</th>
+              <th className="text-left px-6 py-3">Created</th>
               <th className="text-right px-6 py-3">Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {paginatedAssets.map((asset: any) => (
+            {paginatedDepartments.map((department: any) => (
               <tr
-                key={asset._id}
+                key={department._id}
                 className="border-b border-zinc-100 hover:bg-zinc-50 transition-all"
               >
-                {/* Asset ID */}
-                <td className="px-6 py-3 font-medium text-zinc-700 text-[15px]">
-                  {asset.assetId}
-                </td>
-
                 {/* Name */}
                 <td className="px-6 py-3 font-semibold text-zinc-900 text-[15px]">
-                  {asset.name}
-                </td>
-
-                {/* Category */}
-                <td className="px-6 py-3 text-sm text-zinc-600">
-                  {asset.category?.name}
-                </td>
-
-                {/* Brand */}
-                <td className="px-6 py-3 text-sm text-zinc-600">
-                  {asset.brand}
+                  {department.name}
                 </td>
 
                 {/* Status */}
                 <td className="px-6 py-3">
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
-                      asset.status === "Available"
+                      department.status === "Active"
                         ? "bg-emerald-50 text-emerald-600 border border-emerald-100"
-                        : asset.status === "Assigned"
-                          ? "bg-blue-50 text-blue-600 border border-blue-100"
-                          : asset.status === "Repair"
-                            ? "bg-yellow-50 text-yellow-600 border border-yellow-100"
-                            : "bg-red-50 text-red-500 border border-red-100"
+                        : "bg-red-50 text-red-500 border border-red-100"
                     }`}
                   >
-                    {asset.status}
+                    {department.status}
                   </span>
+                </td>
+
+                {/* Created */}
+                <td className="px-6 py-3 text-sm text-zinc-500">
+                  {new Date(department.createdAt).toLocaleDateString()}
                 </td>
 
                 {/* Actions */}
                 <td className="px-6 py-3">
-                  <div className="flex gap-3 items-center justify-end">
+                  <div className="flex items-center justify-end">
                     <Link
-                      href={`/assets/${asset._id}`}
-                      className="w-9 h-9 rounded-lg border border-zinc-200 hover:bg-zinc-100 transition-all flex items-center justify-center text-zinc-600"
-                      title="View Details"
+                      href={`/departments/edit/${department._id}`}
+                      className="group inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-blue-600 transition-all duration-200 hover:bg-zinc-100"
                     >
-                      <i className="ri-eye-line"></i>
-                    </Link>
-                    <Link
-                      href={`/assets/edit/${asset._id}`}
-                      className="w-9 h-9 rounded-lg border border-zinc-200 hover:bg-zinc-100 transition-all flex items-center justify-center text-blue-600"
-                      title="Edit"
-                    >
-                      <i className="ri-pencil-line"></i>
+                      <i className="ri-pencil-line transition-transform duration-200 group-hover:rotate-12"></i>
+                      <span>Edit</span>
                     </Link>
                   </div>
                 </td>
               </tr>
             ))}
 
-            {paginatedAssets.length === 0 && (
+            {paginatedDepartments.length === 0 && (
               <tr>
-                <td colSpan={6} className="text-center py-14 text-zinc-500">
-                  No assets found.
+                <td colSpan={4} className="text-center py-14 text-zinc-500">
+                  No departments found.
                 </td>
               </tr>
             )}
@@ -212,8 +184,8 @@ export default function AssetTable() {
       <div className="flex items-center justify-between px-6 py-4 border-t border-zinc-100">
         <p className="text-sm text-zinc-500">
           Showing {(currentPage - 1) * itemsPerPage + 1} -{" "}
-          {Math.min(currentPage * itemsPerPage, filteredAssets.length)} of{" "}
-          {filteredAssets.length}
+          {Math.min(currentPage * itemsPerPage, filteredDepartments.length)} of{" "}
+          {filteredDepartments.length}
         </p>
 
         <div className="flex items-center gap-2">

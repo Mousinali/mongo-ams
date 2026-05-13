@@ -1,148 +1,35 @@
 "use client";
 
+import CategoryTable from "@/components/categories/CategoryTable";
 import Link from "next/link";
 
-import {
-  useEffect,
-  useState,
-} from "react";
-
 export default function CategoriesPage() {
-  const [categories, setCategories] =
-    useState([]);
-
-  const [loading, setLoading] = useState(true);
-
-  async function fetchCategories() {
-    try {
-      const res = await fetch(
-        "/api/categories"
-      );
-
-      const data =
-        await res.json();
-
-      setCategories(
-        data.data || []
-      );
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-zinc-900">
             Categories
           </h1>
 
-          <p className="text-zinc-500 mt-2">
+          <p className="text-xs sm:text-sm font-medium text-zinc-500 mt-1">
             Manage asset categories
           </p>
         </div>
 
-        <Link
-          href="/categories/add"
-          className="h-11 px-5 rounded-xl bg-black text-white font-medium hover:bg-zinc-800 transition-all inline-flex items-center"
-        >
-          Add Category
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/categories/add"
+            className="inline-flex py-2 items-center justify-center rounded-lg bg-zinc-900 pr-6 pl-4 text-sm font-medium gap-2 text-zinc-50 transition-all hover:bg-zinc-800 shadow-lg shadow-zinc-200 active:scale-95"
+          >
+            <i className="ri-add-line"></i>Add Category
+          </Link>
+        </div>
       </div>
 
-      {/* Loading Skeleton */}
-      {loading ? (
-        <div className="bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
-          <table className="w-full">
-            <thead className="bg-zinc-50 border-b border-zinc-100">
-              <tr>
-                {["w-28", "w-14", "w-16"].map((w, i) => (
-                  <th key={i} className={`${i === 2 ? "text-right" : "text-left"} p-4`}>
-                    <div className={`h-4 ${w} bg-zinc-200 rounded animate-pulse ${i === 2 ? "ml-auto" : ""}`} />
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {[...Array(4)].map((_, i) => (
-                <tr key={i} className="border-b border-zinc-100">
-                  <td className="p-4"><div className="h-4 w-28 bg-zinc-100 rounded animate-pulse" /></td>
-                  <td className="p-4"><div className="h-5 w-14 bg-zinc-100 rounded-full animate-pulse" /></td>
-                  <td className="p-4"><div className="flex items-center justify-end"><div className="w-9 h-9 bg-zinc-100 rounded-lg animate-pulse" /></div></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        /* Table */
-        <div className="bg-white border border-zinc-200 rounded-3xl overflow-hidden shadow-sm">
-          <table className="w-full">
-            <thead className="bg-zinc-50 border-b border-zinc-100">
-              <tr>
-                <th className="text-left p-4 text-sm font-semibold text-zinc-600">
-                  Category Name
-                </th>
-
-                <th className="text-left p-4 text-sm font-semibold text-zinc-600">
-                  Status
-                </th>
-
-                <th className="text-right p-4 text-sm font-semibold text-zinc-600">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {categories.map(
-                (category: any) => (
-                  <tr
-                    key={category._id}
-                    className="border-b border-zinc-100 hover:bg-zinc-50/50"
-                  >
-                    <td className="p-4 font-semibold text-zinc-900">
-                      {category.name}
-                    </td>
-
-                    <td className="p-4">
-                      <span
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${
-                          category.status ===
-                          "Active"
-                            ? "bg-emerald-50 text-emerald-600 border border-emerald-100"
-                            : "bg-red-50 text-red-500 border border-red-100"
-                        }`}
-                      >
-                        {category.status}
-                      </span>
-                    </td>
-
-                    <td className="p-4">
-                      <div className="flex items-center justify-end">
-                        <Link
-                          href={`/categories/edit/${category._id}`}
-                          className="w-9 h-9 rounded-lg border border-zinc-200 hover:bg-zinc-100 transition-all flex items-center justify-center"
-                        >
-                          <i className="ri-edit-line"></i>
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+      {/* Table Component */}
+      <CategoryTable />
     </div>
   );
 }
